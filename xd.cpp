@@ -84,12 +84,25 @@ int main() {
 				}
 			}
 
+			int maxr = 1, maxg = 1, maxb = 1;
+
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 					int amt = (i % 2) + (j % 2);
 					// R[i][j] /= (1<<amt);
 					// G[i][j] /= (1<<amt);
 					// B[i][j] /= (1<<amt);
+					maxr = max(maxr, R[i][j]);
+					maxg = max(maxr, G[i][j]);
+					maxb = max(maxr, B[i][j]);
+				}
+			}
+
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					R[i][j] = (int) (R[i][j] * (255. / maxr));
+					G[i][j] = (int) (G[i][j] * (255. / maxg));
+					B[i][j] = (int) (B[i][j] * (255. / maxb));
 				}
 			}
 
