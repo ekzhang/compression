@@ -87,9 +87,9 @@ int main() {
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 					int amt = (i % 2) + (j % 2);
-					R[i][j] /= (1<<amt);
-					G[i][j] /= (1<<amt);
-					B[i][j] /= (1<<amt);
+					// R[i][j] /= (1<<amt);
+					// G[i][j] /= (1<<amt);
+					// B[i][j] /= (1<<amt);
 				}
 			}
 
