@@ -96,6 +96,37 @@ int main() {
 				cout << A[i] << '\n';
 			}
 		}
+
+		if (b == 200){
+			for (int i = 0; i < N; i += 19) {
+				for (int j = 0; j < N; j += 19) {
+					// R2[i][j] = (R[i][j] + R[i+1][j] + R[i][j+1] + R[i+1][j+1] + 2) / 4;
+					// G2[i][j] = (G[i][j] + G[i+1][j] + G[i][j+1] + G[i+1][j+1] + 2) / 4;
+					// B2[i][j] = (B[i][j] + B[i+1][j] + B[i][j+1] + B[i+1][j+1] + 2) / 4;
+					R2[i][j] = R[i][j];
+					G2[i][j] = G[i][j];
+					B2[i][j] = B[i][j];
+
+				}
+			}
+
+			for(int i = 0; i < N; i += 19){
+				for(int j = 0; j < N; j += 19){
+					R2[i][j] = R2[i][j] >> 5;
+					G2[i][j] = G2[i][j] >> 5;
+					B2[i][j] = B2[i][j] >> 6;
+				}
+			}
+			for(int i = 0; i < N; i += 19){
+				for(int j = 0; j < N; j += 19){
+					A[i*N/361 + j/19] = (R2[i][j] << 5) + (G2[i][j] << 2) + B2[i][j];
+				}
+			}
+			cout << b << endl;
+			for(int i = 0; i < b; i++) {
+				cout << A[i] << '\n';
+			}
+		}
 	}
 	else {
 		// decoding
@@ -167,6 +198,47 @@ int main() {
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 					if (i % 6 == 0 && j % 6 == 0) continue;
+					R[i][j] /= c[i][j];
+					G[i][j] /= c[i][j];
+					B[i][j] /= c[i][j];
+				}
+			}
+
+			cout << -1 << '\n' << 0 << '\n';
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					cout << R[i][j] << '\n' << G[i][j] << '\n' << B[i][j] << '\n';
+				}
+			}
+		}
+		if (b == 200){
+			for (int i = 0; i < N; i += 19) {
+				for (int j = 0; j < N; j += 19) {
+					int px = A[i*N/361 + j/19];
+					int r = (px & 0b11100000) >> 5 << 5;
+					int g = (px & 0b00011100) >> 2 << 5;
+					int b = (px & 0b00000011) >> 0 << 6;
+
+					R[i][j] = r;
+					G[i][j] = g;
+					B[i][j] = b;
+
+					for (int di = i-18; di <= i+18; di++) {
+						for (int dj = j-18; dj <= j+18; dj++) {
+							if (di == i && dj == j) continue;
+							double weight = 1 / p(di - i, dj - j);
+							c[di][dj] += weight;
+							R[(di + N) % N][(dj + N) % N] += r * weight;
+							G[(di + N) % N][(dj + N) % N] += g * weight;
+							B[(di + N) % N][(dj + N) % N] += b * weight;
+						}
+					}
+				}
+			}
+
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					if (i % 19 == 0 && j % 19 == 0) continue;
 					R[i][j] /= c[i][j];
 					G[i][j] /= c[i][j];
 					B[i][j] /= c[i][j];
