@@ -239,9 +239,10 @@ int main() {
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
 					if (i % 19 == 0 && j % 19 == 0) continue;
-					R[i][j] /= c[i][j];
-					G[i][j] /= c[i][j];
-					B[i][j] /= c[i][j];
+					// c[i][j] = .5;
+					// R[i][j] /= c[i][j];
+					// G[i][j] /= c[i][j];
+					// B[i][j] /= c[i][j];
 				}
 			}
 
