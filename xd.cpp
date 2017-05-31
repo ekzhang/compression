@@ -38,12 +38,12 @@ int main() {
 		if (b == 20000) {
 			for (int i =i = 0; i < N; i += 2) {
 				for (int j = 0; j < N; j += 2) {
-					// R2[i][j] = (R[i][j] + R[i+1][j] + R[i][j+1] + R[i+1][j+1] + 2) / 4;
-					// G2[i][j] = (G[i][j] + G[i+1][j] + G[i][j+1] + G[i+1][j+1] + 2) / 4;
-					// B2[i][j] = (B[i][j] + B[i+1][j] + B[i][j+1] + B[i+1][j+1] + 2) / 4;
-					R2[i][j] = R[i][j];
-					G2[i][j] = G[i][j];
-					B2[i][j] = B[i][j];
+					R2[i][j] = (R[i][j] + R[i+1][j] + R[i][j+1] + R[i+1][j+1] + 2) / 4;
+					G2[i][j] = (G[i][j] + G[i+1][j] + G[i][j+1] + G[i+1][j+1] + 2) / 4;
+					B2[i][j] = (B[i][j] + B[i+1][j] + B[i][j+1] + B[i+1][j+1] + 2) / 4;
+					// R2[i][j] = R[i][j];
+					// G2[i][j] = G[i][j];
+					// B2[i][j] = B[i][j];
 
 				}
 			}
@@ -140,9 +140,9 @@ int main() {
 			for (int i = 0; i < N; i += 2) {
 				for (int j = 0; j < N; j += 2) {
 					int px = A[i*N/4 + j/2];
-					int r = (px & 0b11100000) >> 5 << 5;
-					int g = (px & 0b00011100) >> 2 << 5;
-					int b = (px & 0b00000011) >> 0 << 6;
+					int r = ((px & 0b11100000) >> 5 << 5) + 16;
+					int g = ((px & 0b00011100) >> 2 << 5) + 16;
+					int b = ((px & 0b00000011) >> 0 << 6) + 32;
 					for (int di = i-1; di <= i+1; di++) {
 						for (int dj = j-1; dj <= j+1; dj++) {
 							R[(di + N) % N][(dj + N) % N] += r;
@@ -174,9 +174,9 @@ int main() {
 			for (int i = 0; i < N; i += 6) {
 				for (int j = 0; j < N; j += 6) {
 					int px = A[i*N/36 + j/6];
-					int r = (px & 0b11100000) >> 5 << 5;
-					int g = (px & 0b00011100) >> 2 << 5;
-					int b = (px & 0b00000011) >> 0 << 6;
+					int r = ((px & 0b11100000) >> 5 << 5) + 16;
+					int g = ((px & 0b00011100) >> 2 << 5) + 16;
+					int b = ((px & 0b00000011) >> 0 << 6) + 32;
 
 					R[i][j] = r;
 					G[i][j] = g;
@@ -215,9 +215,9 @@ int main() {
 			for (int i = 0; i < N; i += 19) {
 				for (int j = 0; j < N; j += 19) {
 					int px = A[i*N/361 + j/19];
-					int r = (px & 0b11100000) >> 5 << 5;
-					int g = (px & 0b00011100) >> 2 << 5;
-					int b = (px & 0b00000011) >> 0 << 6;
+					int r = ((px & 0b11100000) >> 5 << 5) + 16;
+					int g = ((px & 0b00011100) >> 2 << 5) + 16;
+					int b = ((px & 0b00000011) >> 0 << 6) + 32;
 
 					R[i][j] = r;
 					G[i][j] = g;
